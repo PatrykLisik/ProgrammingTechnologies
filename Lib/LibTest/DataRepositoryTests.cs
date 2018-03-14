@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Moq;
 
 namespace Lib.Tests
 {
@@ -26,7 +27,12 @@ namespace Lib.Tests
         [TestMethod()]
         public void AddBookTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBook = new Mock<Book>("aaa", "bbb");
+            dataRepository.AddBook(MockBook.Object);
+            DataContext dataContext = typeof(DataContext).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(dataRepository);
+            Assert.Equals(1, dataContext.Books.Count());
+
         }
 
         [TestMethod()]

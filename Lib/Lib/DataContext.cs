@@ -8,10 +8,10 @@ namespace Lib
 {
     public class DataContext
     {
-        public List<Book> Books;
-        public Dictionary<Borrow, DateTime> Borrows;
-        public List<BookDescription> BookDescriptions;
-        public List<Reader> Readers;
+        public List<Book> Books { get; set; }
+        public Dictionary<Borrow, DateTime> Borrows { get; set; }
+        public List<BookDescription> BookDescriptions { get; set; }
+        public List<Reader> Readers { get; set; }
 
     }
 }
