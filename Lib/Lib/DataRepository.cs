@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    class DataRepository:IRepository
+    public class DataRepository:IRepository
     {
         DataContext Data = new DataContext();
         DataFiller Filler;

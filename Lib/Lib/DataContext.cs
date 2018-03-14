@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    public struct DataContext
+    public class DataContext
     {
         public List<Book> Books;
         public Dictionary<Borrow, DateTime> Borrows;
