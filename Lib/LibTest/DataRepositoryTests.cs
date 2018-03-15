@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lib;
 using System;
 using System.Collections.Generic;
@@ -30,15 +30,20 @@ namespace Lib.Tests
             DataRepository dataRepository = new DataRepository();
             var MockBook = new Mock<Book>("aaa", "bbb");
             dataRepository.AddBook(MockBook.Object);
-            DataContext dataContext = typeof(DataContext).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(dataRepository);
-            Assert.Equals(1, dataContext.Books.Count());
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext) data.GetValue(dataRepository);
+            Assert.AreEqual(1, dataContext.Books.Count());
 
         }
 
         [TestMethod()]
         public void GetBookTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBook = new Mock<Book>("aaa", "bbb");
+            dataRepository.AddBook(MockBook.Object);
+            Book book = dataRepository.GetBook(0);
+            Assert.AreSame(book, MockBook.Object);
         }
 
         [TestMethod()]
