@@ -13,5 +13,12 @@ namespace Lib
         public List<BookDescription> BookDescriptions { get; set; }
         public List<Reader> Readers { get; set; }
 
+        public DataContext()
+        {
+            Books = new List<Book>();
+            Borrows = new Dictionary<Borrow, DateTime>();
+            BookDescriptions = new List<BookDescription>();
+            Readers = new List<Reader>();
+        }
     }
 }
