@@ -30,18 +30,11 @@ namespace Lib
         public void DeleteReader(int id) => Data.Readers.Remove(GetReader(id));
 
         //Borrow aka Zdarzenie
-        public void AddBorrow(Borrow borrow) => Data.Borrows.Add(borrow, DateTime.Now);
-        public Reader GetBorrow(int id) { return Data.Readers[id]; }
-        public List<Borrow> GetAllBorrows() { return new List<Borrow>(Data.Borrows.Keys); }
-        public void UpdateBorrow(Borrow old, Borrow update)
-        {
-  
-            //add "update Borrow" with date of "old Borrow"
-            DateTime oldTime = Data.Borrows[old];
-            Data.Borrows.Add(update, oldTime); //add new
-            this.DeleteBorrow(old); //delete old 
-        }
-        public void DeleteBorrow(Borrow id) => Data.Borrows.Remove(id);
+        public void AddBorrow(Borrow borrow) => Data.Borrows.Add(borrow);
+        public Borrow GetBorrow(int id) { return Data.Borrows[id]; }
+        public List<Borrow> GetAllBorrows() { return Data.Borrows; }
+        public void UpdateBorrow(int id, Borrow New) => Data.Borrows[id] = New;
+        public void DeleteBorrow(int id) => Data.Borrows.Remove(GetBorrow(id));
 
         //BookDescription aka OpisStanu
         public void AddBookDescription(BookDescription bookDescriptions) => Data.BookDescriptions.Add(bookDescriptions);
@@ -49,6 +42,7 @@ namespace Lib
         public List<BookDescription> GetAllBookDescriptions() { return Data.BookDescriptions; }
         public void UpdateBookDescription(int id, BookDescription bookDescription) => Data.BookDescriptions[id] = bookDescription;
         public void DeleteBookDescription(int id) => Data.BookDescriptions.Remove(GetBookDescription(id));
+
 
     }
 

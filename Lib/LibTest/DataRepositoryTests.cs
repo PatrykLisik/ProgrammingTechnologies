@@ -12,6 +12,28 @@ namespace Lib.Tests
     [TestClass()]
     public class DataRepositoryTests
     {
+        Random rnd = new Random();
+        String RandomString()
+        {
+           return  Guid.NewGuid().ToString().Substring(0, 10);
+        }
+        Mock<Book> RandomBook()
+        {
+            return new Mock<Book>(RandomString(), RandomString());
+        }
+        Mock<Reader> RandomReader()
+        {
+ 
+            return new Mock<Reader>(RandomString(), RandomString(), rnd.Next());
+        }
+        Mock<Borrow> RandomBorrow()
+        {
+            return new Mock<Borrow>(RandomReader().Object, RandomBookDescription().Object);
+        }
+        Mock<BookDescription> RandomBookDescription()
+        {
+            return new Mock<BookDescription>(RandomString(), RandomString());
+        }
         [TestMethod()]
         public void FillTest()
         {
@@ -28,7 +50,7 @@ namespace Lib.Tests
         public void AddBookTest()
         {
             DataRepository dataRepository = new DataRepository();
-            var MockBook = new Mock<Book>("aaa", "bbb");
+            var MockBook = RandomBook();
             dataRepository.AddBook(MockBook.Object);
             var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             DataContext dataContext = (DataContext) data.GetValue(dataRepository);
@@ -40,7 +62,7 @@ namespace Lib.Tests
         public void GetBookTest()
         {
             DataRepository dataRepository = new DataRepository();
-            var MockBook = new Mock<Book>("aaa", "bbb");
+            var MockBook = RandomBook();
 
             dataRepository.AddBook(MockBook.Object);
 
@@ -57,10 +79,7 @@ namespace Lib.Tests
 
             for (int i = 0; i < NUMBER_OF_BOOK; i++)
             {
-                String randomString1 = Guid.NewGuid().ToString().Substring(0, 10);
-                String randomString2 = Guid.NewGuid().ToString().Substring(0, 10);
-
-                var MockBook = new Mock<Book>(randomString1, randomString2);
+                var MockBook = RandomBook();
 
                 dataRepository.AddBook(MockBook.Object);
                 ExpectedBooklist.Add(MockBook.Object);
@@ -74,13 +93,13 @@ namespace Lib.Tests
         {
             //preperation is the same as in addBook
             DataRepository dataRepository = new DataRepository();
-            var MockBook = new Mock<Book>("First", "Book");
+            var MockBook = RandomBook();
             dataRepository.AddBook(MockBook.Object);
             Book book = dataRepository.GetBook(0);
             Assert.AreEqual(book, MockBook.Object);
 
             //test if book can be changed
-            var MockBook2 = new Mock<Book>("Diffrent", "Book");
+            var MockBook2 = RandomBook();
             dataRepository.UpdateBook(0, MockBook2.Object);
 
             Assert.AreEqual(MockBook2.Object, dataRepository.GetBook(0));
@@ -92,7 +111,7 @@ namespace Lib.Tests
         public void DeleteBookTest()
         {
             DataRepository dataRepository = new DataRepository();
-            var MockBook = new Mock<Book>("First", "Book");
+            var MockBook = RandomBook();
             dataRepository.AddBook(MockBook.Object);
             Book book = dataRepository.GetBook(0);
             Assert.AreEqual(book, MockBook.Object);
@@ -113,7 +132,7 @@ namespace Lib.Tests
         public void AddReaderTest()
         {
             DataRepository dataRepository = new DataRepository();
-            var MockReader = new Mock<Reader>("aaa", "bbb",10);
+            var MockReader = RandomReader();
 
             dataRepository.AddReader(MockReader.Object);
 
@@ -130,7 +149,7 @@ namespace Lib.Tests
         public void GetReaderTest()
         {
             DataRepository dataRepository = new DataRepository();
-            var MockReader = new Mock<Reader>("aaa", "bbb", 10);
+            var MockReader = RandomReader();
 
             dataRepository.AddReader(MockReader.Object);
 
@@ -147,10 +166,7 @@ namespace Lib.Tests
 
             for (int i = 0; i < NUMBER_OF_READERS; i++)
             {
-                String randomString1 = Guid.NewGuid().ToString().Substring(0, 10);
-                String randomString2 = Guid.NewGuid().ToString().Substring(0, 10);
-
-                var MockReader = new Mock<Reader>(randomString1, randomString2,i);
+                var MockReader = RandomReader();
 
                 dataRepository.AddReader(MockReader.Object);
                 ExpectedReaderlist.Add(MockReader.Object);
@@ -162,37 +178,109 @@ namespace Lib.Tests
         [TestMethod()]
         public void UpdateReaderTest()
         {
-            throw new NotImplementedException();
+            //preperation is the same as in addBook
+            DataRepository dataRepository = new DataRepository();
+            var MockReader = RandomReader();
+            dataRepository.AddReader(MockReader.Object);
+            Reader reader = dataRepository.GetReader(0);
+            Assert.AreEqual(reader, MockReader.Object);
+
+            //test if book can be changed
+            var MockReader2 = RandomReader();
+            dataRepository.UpdateReader(0, MockReader2.Object);
+
+            Assert.AreEqual(MockReader2.Object, dataRepository.GetReader(0));
+
         }
 
         [TestMethod()]
         public void DeleteReaderTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockReader = RandomReader();
+            dataRepository.AddReader(MockReader.Object);
+            Reader reader = dataRepository.GetReader(0);
+            Assert.AreEqual(reader, MockReader.Object);
+
+            dataRepository.DeleteReader(0);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(0, dataContext.Readers.Count());
+
+            //Test object given by getAllBooks method
+            Assert.AreEqual(0, dataRepository.GetAllReaders().Count());
         }
 
         [TestMethod()]
         public void AddBorrowTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBorrow = RandomBorrow();
+            dataRepository.AddBorrow(MockBorrow.Object);
+
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(1, dataContext.Borrows.Count());
         }
 
         [TestMethod()]
         public void GetBorrowTest()
         {
-            throw new NotImplementedException();
+            //Prepare 
+            DataRepository dataRepository = new DataRepository();
+
+            var MockBorrow = RandomBorrow();
+            dataRepository.AddBorrow(MockBorrow.Object);
+
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(1, dataContext.Borrows.Count());
+
+            //Test 
+            Borrow borrow = dataRepository.GetBorrow(0);
+            Assert.AreEqual(borrow, MockBorrow.Object);
+
+
         }
 
         [TestMethod()]
         public void GetAllBorrowsTest()
         {
-            throw new NotImplementedException();
+            const int NUMBER_OF_BORROWS = 500;
+            DataRepository dataRepository = new DataRepository();
+            var ExpectedBorowList = new List<Borrow>();
+            for (int i = 0; i < NUMBER_OF_BORROWS; i++)
+            {
+                var MockBorrow = RandomBorrow();
+
+                dataRepository.AddBorrow(MockBorrow.Object);
+                ExpectedBorowList.Add(MockBorrow.Object);
+            }
+
+            Assert.IsTrue(ExpectedBorowList.SequenceEqual(dataRepository.GetAllBorrows()));
+
         }
 
         [TestMethod()]
         public void UpdateBorrowTest()
         {
-            throw new NotImplementedException();
+            //preperation is the same as in addBorrow
+            DataRepository dataRepository = new DataRepository();
+            var MockBorrow1 = RandomBorrow();
+            var MockBorrow2 = RandomBorrow();
+
+            dataRepository.AddBorrow(MockBorrow1.Object);
+            Borrow borrow = dataRepository.GetBorrow(0);
+            Assert.AreEqual(borrow, MockBorrow1.Object);
+
+            //test if book can be changed
+       
+            dataRepository.UpdateBorrow(0, MockBorrow2.Object);
+
+            Assert.AreEqual(MockBorrow2.Object, dataRepository.GetBorrow(0));
+
         }
 
         [TestMethod()]
