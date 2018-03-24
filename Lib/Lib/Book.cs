@@ -15,5 +15,9 @@ namespace Lib
         {
             Description = description;
         }
+        public Book(string title, string author)
+        {
+            Description = new BookDescription(title,author);
+        }
     }
 }

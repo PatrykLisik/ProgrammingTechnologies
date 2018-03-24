@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    public abstract class DataFiller
+    public interface DataFiller
     {
-        public abstract void FillAll(DataContext context); 
+        void FillAll(DataContext context); 
     }
 }

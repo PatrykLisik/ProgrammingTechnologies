@@ -12,7 +12,7 @@ namespace Lib
         string Title;
         string Author;
 
-        protected BookDescription(string title, string author)
+        public BookDescription(string title, string author)
         {
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Author = author ?? throw new ArgumentNullException(nameof(author));

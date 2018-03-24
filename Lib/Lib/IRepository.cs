@@ -28,10 +28,10 @@ namespace Lib
 
         //Borrow aka Zdarzenie
         void AddBorrow(Borrow borrow);
-        Reader GetBorrow(int id);
+        Borrow GetBorrow(int id);
         List<Borrow> GetAllBorrows();
-        void UpdateBorrow(Borrow old, Borrow update);
-        void DeleteBorrow(Borrow id);
+        void UpdateBorrow(int id, Borrow New);
+        void DeleteBorrow(int id);
 
         //BookDescription aka OpisStanu
         void AddBookDescription(BookDescription bookDescriptions);

@@ -11,12 +11,15 @@ namespace Lib
     {
         Reader Who;
         BookDescription What;
+        DateTime Date;
 
 
         public Borrow(Reader who, BookDescription what)
         {
             Who = who ?? throw new ArgumentNullException(nameof(who));
             What = what ?? throw new ArgumentNullException(nameof(what));
+            Date = new DateTime();
+            Date = DateTime.Today;
         }
 
     }
