@@ -12,6 +12,7 @@ namespace Lib.Tests
     [TestClass()]
     public class DataRepositoryTests
     {
+        //generating Random and mock object
         Random rnd = new Random();
         String RandomString()
         {
@@ -34,6 +35,8 @@ namespace Lib.Tests
         {
             return new Mock<BookDescription>(RandomString(), RandomString());
         }
+
+        //actual tests
         [TestMethod()]
         public void FillTest()
         {
@@ -103,7 +106,6 @@ namespace Lib.Tests
             dataRepository.UpdateBook(0, MockBook2.Object);
 
             Assert.AreEqual(MockBook2.Object, dataRepository.GetBook(0));
-
 
         }
 
@@ -286,37 +288,109 @@ namespace Lib.Tests
         [TestMethod()]
         public void DeleteBorrowTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBorrow = RandomBorrow();
+            dataRepository.AddBorrow(MockBorrow.Object);
+            Borrow borrow = dataRepository.GetBorrow(0);
+            Assert.AreEqual(borrow, MockBorrow.Object);
+
+            dataRepository.DeleteBorrow(0);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(0, dataContext.Borrows.Count());
+
+            //Test object given by getAllBooks method
+            Assert.AreEqual(0, dataRepository.GetAllBorrows().Count());
+
         }
 
         [TestMethod()]
         public void AddBookDescriptionTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBookDescription = RandomBookDescription();
+
+            dataRepository.AddBookDescription(MockBookDescription.Object);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(1, dataContext.BookDescriptions.Count());
+
+            //Test object given by getAllBooks method
+            Assert.AreEqual(1, dataRepository.GetAllBookDescriptions().Count());
         }
 
         [TestMethod()]
         public void GetBookDescriptionTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBookDescription = RandomBookDescription();
+
+            dataRepository.AddBookDescription(MockBookDescription.Object);
+
+            BookDescription bookDescription = dataRepository.GetBookDescription(0);
+            Assert.AreEqual(bookDescription, MockBookDescription.Object);
         }
 
         [TestMethod()]
         public void GetAllBookDescriptionsTest()
         {
-            throw new NotImplementedException();
+            const int NUMBER_OF_BOOK_DESCRIPTION = 100;
+            DataRepository dataRepository = new DataRepository();
+            var ExpectedBookDescriptionlist = new List<BookDescription>();
+
+            for (int i = 0; i < NUMBER_OF_BOOK_DESCRIPTION; i++)
+            {
+                var MockBookDescription = RandomBookDescription();
+
+                dataRepository.AddBookDescription(MockBookDescription.Object);
+                ExpectedBookDescriptionlist.Add(MockBookDescription.Object);
+            }
+
+            Assert.IsTrue(ExpectedBookDescriptionlist.SequenceEqual(dataRepository.GetAllBookDescriptions()));
+
         }
 
         [TestMethod()]
         public void UpdateBookDescriptionTest()
         {
-            throw new NotImplementedException();
+            //preperation is the same as in addBook
+            DataRepository dataRepository = new DataRepository();
+            var MockBookDescription = RandomBookDescription();
+            dataRepository.AddBookDescription(MockBookDescription.Object);
+            BookDescription bookkDescription = dataRepository.GetBookDescription(0);
+            Assert.AreEqual(bookkDescription, MockBookDescription.Object);
+
+            //test if book can be changed
+            var MockBookDescription2 = RandomBookDescription();
+            dataRepository.UpdateBookDescription(0, MockBookDescription2.Object);
+
+            Assert.AreEqual(MockBookDescription2.Object, dataRepository.GetBookDescription(0));
+
         }
 
         [TestMethod()]
         public void DeleteBookDescriptionTest()
         {
-            throw new NotImplementedException();
+            DataRepository dataRepository = new DataRepository();
+            var MockBookDescription = RandomBookDescription();
+            dataRepository.AddBookDescription(MockBookDescription.Object);
+            BookDescription bookDescription = dataRepository.GetBookDescription(0);
+            Assert.AreEqual(bookDescription, MockBookDescription.Object);
+
+            dataRepository.DeleteBookDescription(0);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(0, dataContext.Books.Count());
+
+            //Test object given by getAllBooks method
+            Assert.AreEqual(0, dataRepository.GetAllBookDescriptions().Count());
+
         }
     }
 }
