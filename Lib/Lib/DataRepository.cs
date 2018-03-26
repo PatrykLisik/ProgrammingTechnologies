@@ -11,7 +11,7 @@ namespace Lib
         DataContext Data = new DataContext();
         IDataFiller Filler;
 
-        public void Fill() { Filler.FillAll(Data); }
+        public void Fill() { Data=Filler.FillAll(); }
         public void SetFiller(IDataFiller dataFiller) => Filler = dataFiller;
 
         //To do make it transaction 

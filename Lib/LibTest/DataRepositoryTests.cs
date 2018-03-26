@@ -35,21 +35,60 @@ namespace Lib.Tests
         {
             return new Mock<BookDescription>(RandomString(), RandomString());
         }
-
+        DataContext PrepareDataContext(int size)
+        {
+            
+            DataContext data = new DataContext();
+            for(int i=0;i<size;i++)
+            {
+                data.BookDescriptions.Add(RandomBookDescription().Object);
+                data.Books.Add(RandomBook().Object);
+                data.Borrows.Add(RandomBorrow().Object);
+                data.Readers.Add(RandomReader().Object);
+            }
+            return data;
+        }
         //actual tests
         [TestMethod()]
         public void FillTest()
         {
-            throw new NotImplementedException();
+            const int DataSize = 30000;
+            //Mock data filler
+            var MockDataFiller = new Mock<IDataFiller>();
+            MockDataFiller.Setup(foo => foo.FillAll()).Returns(PrepareDataContext(DataSize));
+
+            DataRepository dataRepository = new DataRepository();
+
+            //assume that setFiller works correctly
+            dataRepository.SetFiller(MockDataFiller.Object); //set filler
+            dataRepository.Fill(); // fill with objects 
+
+            //test if Data has been filled
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+
+            Assert.AreEqual(DataSize, dataContext.BookDescriptions.Count());
+            Assert.AreEqual(DataSize, dataContext.Books.Count());
+            Assert.AreEqual(DataSize, dataContext.Readers.Count());
+            Assert.AreEqual(DataSize, dataContext.Borrows.Count());
         }
 
         [TestMethod()]
         public void SetFillerTest()
         {
             //Mock data filler
-            var MockDataFiller = new Mock<IDataFiller>(); 
+            var MockDataFiller = new Mock<IDataFiller>();
+            DataRepository dataRepository = new DataRepository();
 
-            //
+            //SetFiller
+            dataRepository.SetFiller(MockDataFiller.Object);
+
+            //Reflect filler
+            var filler = typeof(DataRepository).GetField("Filler", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            IDataFiller dataCactualFiller = (IDataFiller)filler.GetValue(dataRepository);
+
+            //check filler
+            Assert.AreSame(dataCactualFiller, MockDataFiller.Object);
         }
 
         [TestMethod()]

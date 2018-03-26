@@ -8,6 +8,6 @@ namespace Lib
 {
     public interface IDataFiller
     {
-        void FillAll(DataContext context); 
+        DataContext FillAll(); 
     }
 }
