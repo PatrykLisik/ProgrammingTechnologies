@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    public interface DataFiller
+    public interface IDataFiller
     {
         void FillAll(DataContext context); 
     }
