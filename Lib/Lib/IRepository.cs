@@ -10,7 +10,7 @@ namespace Lib
     {
         //Forece to have filler in some way
         void Fill();
-        void SetFiller(DataFiller dataFiller);
+        void SetFiller(IDataFiller dataFiller);
 
         //Book aka Katalog
         void AddBook(Book book);

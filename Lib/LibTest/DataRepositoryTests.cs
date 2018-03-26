@@ -46,7 +46,10 @@ namespace Lib.Tests
         [TestMethod()]
         public void SetFillerTest()
         {
-            throw new NotImplementedException();
+            //Mock data filler
+            var MockDataFiller = new Mock<IDataFiller>(); 
+
+            //
         }
 
         [TestMethod()]

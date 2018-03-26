@@ -9,10 +9,10 @@ namespace Lib
     public class DataRepository:IRepository
     {
         DataContext Data = new DataContext();
-        DataFiller Filler;
+        IDataFiller Filler;
 
         public void Fill() { Filler.FillAll(Data); }
-        public void SetFiller(DataFiller dataFiller) => Filler = dataFiller;
+        public void SetFiller(IDataFiller dataFiller) => Filler = dataFiller;
 
         //To do make it transaction 
         //Book aka Katalog
