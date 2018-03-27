@@ -9,9 +9,9 @@ namespace Lib
     //zadrzenie 
     public class Borrow
     {
-        Reader Who;
-        BookDescription What;
-        DateTime Date;
+        public Reader Who { set; get; }
+        public BookDescription What { get; }
+        public DateTime Date;
 
 
         public Borrow(Reader who, BookDescription what)
