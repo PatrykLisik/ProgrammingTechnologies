@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    //zadrzenie 
+    //zdarzenie 
     public class Borrow
     {
-        public Reader Who { set; get; }
+        public Reader Who { get; }
         public BookDescription What { get; }
-        public DateTime Date;
+        public DateTime Date { get; }
 
 
         public Borrow(Reader who, BookDescription what)
@@ -22,5 +22,9 @@ namespace Lib
             Date = DateTime.Today;
         }
 
+        public override string ToString()
+        {
+            return String.Format("Borrow of: {0} by {1} on {2}",What,Who,Date);
+        }
     }
 }

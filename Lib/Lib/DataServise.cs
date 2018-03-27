@@ -24,8 +24,27 @@ namespace Lib
             return ans;
 
         }
-        //public List<Borrow>  BorrowsBetweenDates(DateTime start, DateTime end) { }
-        //public void AddBorow(Book book, Reader reader) { }
+        public List<Borrow>  BorrowsBetweenDates(DateTime start, DateTime end) {
+            List<Borrow> ans = new List<Borrow>();
+            //the whole list travrsal is sufficent for small list
+            //if this botleneck chnage boorows and dates to hash map
+            foreach (Borrow b in Data.GetAllBorrows())
+            {
+                if (b.Date>start && b.Date<end)
+                {
+                    ans.Add(b);
+                }
+            }
+
+            return ans;
+        }
+        public void AddBorow(BookDescription book, Reader reader) {
+            Data.AddBorrow(new Borrow(reader,book));
+        }
+        public void ShowBooks() { }
+        public void ShowBorrows() { }
+        public void ShowReaders() { }
+
 
         //Dependancy injection
         public DataService(IRepository data)

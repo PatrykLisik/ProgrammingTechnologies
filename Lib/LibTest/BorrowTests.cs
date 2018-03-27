@@ -16,7 +16,8 @@ namespace Lib.Tests
         public void BorrowConstructNotNull()
         {
             var ReaderMock = new Mock<Reader>("aaa","bbbb",10);
-            var BookDescriptionMock = new Mock<BookDescription>("aaa","bbb");
+            var BookMock = new Mock<Book>("aaa", "bbbb");
+            var BookDescriptionMock = new Mock<BookDescription>("aaa",BookMock.Object);
             try
             {
                 var BorrowTestObj = new Borrow(ReaderMock.Object, BookDescriptionMock.Object);

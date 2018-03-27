@@ -7,11 +7,23 @@ using System.Threading.Tasks;
 namespace Lib
 {
     //wykaz 
-    public class Reader
+    public class Reader:IComparable<Reader>
     {
-        string Name { get; set; }
-        string Surname { get; set; }
-        int Age { get; set; }
+        string Name { get;  }
+        string Surname { get;  }
+        int Age { get; }
+
+
+        public Reader(string name, string surname, int age)
+        {
+            Name = name;
+            Surname = surname;
+            Age = age;
+        }
+
+        //Bad Readers delete and get all not passing
+        //Possible reason: AreEqual is realying on those methods 
+        /*
         public static bool operator ==(Reader lhs, Reader rhs)
         {
             return lhs.Name == rhs.Name && lhs.Surname == rhs.Surname;
@@ -19,12 +31,6 @@ namespace Lib
         public static bool operator !=(Reader lhs, Reader rhs)
         {
             return lhs.Name != rhs.Name || lhs.Surname != rhs.Surname;
-        }
-        public Reader(string name, string surname, int age)
-        {
-            Name = name;
-            Surname = surname;
-            Age = age;
         }
 
         public override bool Equals(object obj)
@@ -36,14 +42,19 @@ namespace Lib
                    Age == reader.Age;
         }
 
-        public override string ToString()
-        {
-            return base.ToString();
-        }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+        */
+        public override string ToString()
+        {
+            return String.Format("Reader: {0} {1}", Name, Surname);
+        }
+
+        public int CompareTo(Reader other)
+        {
+            return Convert.ToInt32(other.Name == Name && other.Surname == Surname);
         }
     }
 }

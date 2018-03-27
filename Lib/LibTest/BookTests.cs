@@ -15,27 +15,14 @@ namespace Lib.Tests
         [TestMethod()]
         public void BookConstructorNoThorowTest()
         {
-
-            var MockBookDescription = new Mock<BookDescription>("aaa", "bbb");
             try
             {
-                var BookTestObj = new Book(MockBookDescription.Object);
+                var BookTestObj = new Book("aaa", "bbb");
             }
             catch (Exception)
             {
                 Assert.Fail();
             }
-        }
-        [TestMethod()]
-        public void BookConstructorCorrectAssigment()
-        {
-            var MockBookDescription = new Mock<BookDescription>("aaa", "bbb");
-            var BookTestObj = new Book(MockBookDescription.Object);
-
-            //test with reflection 
-            var PrivateBookDescription = typeof(Book).GetField("Description", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(BookTestObj);
-            //Is this correct?
-            //Assert.Equals(MockBookDescription.Object, PrivateBookDescription);
         }
     }
 }

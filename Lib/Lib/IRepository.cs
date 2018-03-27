@@ -8,7 +8,7 @@ namespace Lib
 {
     public interface IRepository
     {
-        //Forece to have filler in some way
+        //Force to have filler in some way
         void Fill();
         void SetFiller(IDataFiller dataFiller);
 

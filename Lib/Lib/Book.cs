@@ -9,15 +9,18 @@ namespace Lib
     //katalog
     public class Book
     {
-        BookDescription Description;
+        string Title;
+        string Author;
 
-        public Book(BookDescription description)
-        {
-            Description = description;
-        }
         public Book(string title, string author)
         {
-            Description = new BookDescription(title,author);
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Author = author ?? throw new ArgumentNullException(nameof(author));
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Book: {0} by {1}", Title, Author);
         }
     }
 }

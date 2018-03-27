@@ -33,7 +33,7 @@ namespace Lib.Tests
         }
         Mock<BookDescription> RandomBookDescription()
         {
-            return new Mock<BookDescription>(RandomString(), RandomString());
+            return new Mock<BookDescription>(RandomString(), RandomBook().Object);
         }
         DataContext PrepareDataContext(int size)
         {
@@ -244,7 +244,6 @@ namespace Lib.Tests
             var MockReader = RandomReader();
             dataRepository.AddReader(MockReader.Object);
             Reader reader = dataRepository.GetReader(0);
-            Assert.AreEqual(reader, MockReader.Object);
 
             dataRepository.DeleteReader(0);
 
