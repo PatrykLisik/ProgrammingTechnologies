@@ -41,9 +41,48 @@ namespace Lib
         public void AddBorow(BookDescription book, Reader reader) {
             Data.AddBorrow(new Borrow(reader,book));
         }
-        public void ShowBooks() { }
-        public void ShowBorrows() { }
-        public void ShowReaders() { }
+        private void ShowBooks() {
+            Console.WriteLine("Books:\n");
+            foreach(Book b in Data.GetAllBooks())
+            {
+                Console.WriteLine(b + "\n");
+            }
+            Console.WriteLine("\n\n");
+        }
+        public void ShowBorrows() {
+            Console.WriteLine("Borrows:\n");
+            foreach (Borrow b in Data.GetAllBorrows())
+            {
+                Console.WriteLine(b + "\n");
+            }
+            Console.WriteLine("\n\n");
+        }
+        public void ShowBorrowsOfEveryReaders()
+        {
+            Console.WriteLine("Borrow of every reader:\n");
+            foreach (Reader r in Data.GetAllReaders())
+            {
+                Console.WriteLine(r);
+                foreach(Borrow br in BorrowsOfReader(r))
+                {
+                    Console.WriteLine("\t->" + br);
+                }
+            }
+            Console.WriteLine("\n\n");
+        }
+        public void ShowReaders() {
+            Console.WriteLine("Readers:\n");
+            foreach (Reader b in Data.GetAllReaders())
+            {
+                Console.WriteLine(b + "\n");
+            }
+            Console.WriteLine("\n\n");
+        }
+        public void ShowAll()
+        {
+            ShowBooks();
+            ShowBorrowsOfEveryReaders
+        }
 
 
         //Dependancy injection

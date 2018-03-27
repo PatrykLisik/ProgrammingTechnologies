@@ -64,6 +64,7 @@
     <Compile Include="BookTests.cs" />
     <Compile Include="BorrowTests.cs" />
     <Compile Include="DataRepositoryTests.cs" />
+    <Compile Include="DataServiceTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
