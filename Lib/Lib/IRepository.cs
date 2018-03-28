@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Lib
 {
@@ -29,7 +30,7 @@ namespace Lib
         //Borrow aka Zdarzenie
         void AddBorrow(Borrow borrow);
         Borrow GetBorrow(int id);
-        List<Borrow> GetAllBorrows();
+        ObservableCollection<Borrow> GetAllBorrows();
         void UpdateBorrow(int id, Borrow New);
         void DeleteBorrow(int id);
 
@@ -39,5 +40,13 @@ namespace Lib
         List<BookDescription> GetAllBookDescriptions();
         void UpdateBookDescription(int id, BookDescription bookDescription);
         void DeleteBookDescription(int id);
+
+        //NumberOfBooks aka Random Dictionary I need to fulfil expected data structues list 
+        void AddBookNumber(BookDescription book, int number);
+        void ChangeBookNumber(BookDescription book, int number); // number=-1 => borrow; number =1 => return
+        int GetBookNumber(BookDescription book);
+        Dictionary<BookDescription, int> GetAllNumberOfBooks();
+        void UpdateBookNumber(BookDescription book, int number); // set book number to new value 
+        void DeleteBookNumber(BookDescription book);
     }
 }

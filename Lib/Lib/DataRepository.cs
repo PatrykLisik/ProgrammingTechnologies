@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Lib
 {
@@ -32,7 +33,7 @@ namespace Lib
         //Borrow aka Zdarzenie
         public void AddBorrow(Borrow borrow) => Data.Borrows.Add(borrow);
         public Borrow GetBorrow(int id) { return Data.Borrows[id]; }
-        public List<Borrow> GetAllBorrows() { return Data.Borrows; }
+        public ObservableCollection<Borrow>  GetAllBorrows() { return Data.Borrows; }
         public void UpdateBorrow(int id, Borrow New) => Data.Borrows[id] = New;
         public void DeleteBorrow(int id) => Data.Borrows.Remove(GetBorrow(id));
 
@@ -43,7 +44,37 @@ namespace Lib
         public void UpdateBookDescription(int id, BookDescription bookDescription) => Data.BookDescriptions[id] = bookDescription;
         public void DeleteBookDescription(int id) => Data.BookDescriptions.Remove(GetBookDescription(id));
 
+        //BookNumber 
+        public void AddBookNumber(BookDescription book, int number)
+        {
+            Data.NumberOfBooks.Add(book, number);
+        }
 
+        public void ChangeBookNumber(BookDescription book, int number)
+        {
+            Data.NumberOfBooks[book] += number;
+        }
+
+        public int GetBookNumber(BookDescription book)
+        {
+            return Data.NumberOfBooks[book];
+        }
+
+        public Dictionary<BookDescription, int> GetAllNumberOfBooks()
+        {
+            //memberwiseClone not available
+            return Data.NumberOfBooks; 
+        }
+
+        public void UpdateBookNumber( BookDescription book, int number)
+        {
+            Data.NumberOfBooks[book] = number; 
+        }
+
+        public void DeleteBookNumber(BookDescription book)
+        {
+            Data.NumberOfBooks.Remove(book);
+        }
     }
 
 }

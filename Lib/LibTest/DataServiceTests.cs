@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using System.Collections.ObjectModel;
 
 namespace Lib.Tests
 {
@@ -20,7 +21,7 @@ namespace Lib.Tests
             var Ans = new Mock<IRepository>();
             Ans.Setup(foo => foo.GetAllBooks()).Returns(new List<Book>());
             // Ans.Setup(foo => foo.AddBorrow(Borrow b));
-            Ans.Setup(foo => foo.GetAllBorrows()).Returns(new List<Borrow>());
+            Ans.Setup(foo => foo.GetAllBorrows()).Returns(new ObservableCollection<Borrow>());
             Ans.Setup(foo => foo.GetAllReaders()).Returns(new List<Reader>());
             Ans.Setup(foo => foo.GetAllBooks()).Returns(new List<Book>());
 
@@ -57,9 +58,9 @@ namespace Lib.Tests
 
             return bookDescriptions;
         }
-        List<Borrow> BorrowsList()
+        ObservableCollection<Borrow> BorrowsList()
         {
-            List<Borrow> borrows = new List<Borrow>();
+            ObservableCollection<Borrow> borrows = new ObservableCollection<Borrow>();
             borrows.Add(new Borrow(ReadersList()[0], BookDescriptionsList()[0]));
             borrows.Add(new Borrow(ReadersList()[0], BookDescriptionsList()[1]));
             borrows.Add(new Borrow(ReadersList()[0], BookDescriptionsList()[2]));
