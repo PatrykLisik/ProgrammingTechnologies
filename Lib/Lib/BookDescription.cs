@@ -9,8 +9,8 @@ namespace Lib
     //opis stanu 
     public class BookDescription
     {
-        string Type;
-        Book book;
+        public string Type { get; }
+        public Book book { get; }
 
         public BookDescription(string Type, Book book)
         {

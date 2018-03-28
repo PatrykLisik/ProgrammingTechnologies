@@ -9,9 +9,9 @@ namespace Lib
     //wykaz 
     public class Reader:IComparable<Reader>
     {
-        string Name { get;  }
-        string Surname { get;  }
-        int Age { get; }
+       public string Name { get;  }
+       public string Surname { get;  }
+       public int Age { get; }
 
 
         public Reader(string name, string surname, int age)

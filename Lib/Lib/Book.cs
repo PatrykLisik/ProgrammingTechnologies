@@ -9,8 +9,8 @@ namespace Lib
     //katalog
     public class Book
     {
-        string Title;
-        string Author;
+       public string Title { get; }
+        public string Author { get; }
 
         public Book(string title, string author)
         {

@@ -43,6 +43,7 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookDescription.cs" />
     <Compile Include="Borrow.cs" />
+    <Compile Include="ConstFiller.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="IDataFiller.cs" />
     <Compile Include="DataRepository.cs" />
