@@ -49,6 +49,7 @@
     <Compile Include="DataRepository.cs" />
     <Compile Include="DataServise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomFiller.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="IRepository.cs" />
   </ItemGroup>
