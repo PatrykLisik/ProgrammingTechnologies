@@ -13,10 +13,10 @@ namespace Lib.Tests
     public class DataRepositoryTests
     {
         //generating Random and mock object
-        Random rnd = new Random();
+        Random rng = new Random();
         String RandomString()
         {
-           return  Guid.NewGuid().ToString().Substring(0, 10);
+            return Guid.NewGuid().ToString().Substring(0, 10);
         }
         Mock<Book> RandomBook()
         {
@@ -24,8 +24,7 @@ namespace Lib.Tests
         }
         Mock<Reader> RandomReader()
         {
- 
-            return new Mock<Reader>(RandomString(), RandomString(), rnd.Next());
+            return new Mock<Reader>(RandomString(), RandomString(), rng.Next());
         }
         Mock<Borrow> RandomBorrow()
         {
@@ -37,9 +36,9 @@ namespace Lib.Tests
         }
         DataContext PrepareDataContext(int size)
         {
-            
+
             DataContext data = new DataContext();
-            for(int i=0;i<size;i++)
+            for (int i = 0; i < size; i++)
             {
                 data.BookDescriptions.Add(RandomBookDescription().Object);
                 data.Books.Add(RandomBook().Object);
@@ -52,7 +51,7 @@ namespace Lib.Tests
         [TestMethod()]
         public void FillTest()
         {
-            const int DataSize = 30000;
+            const int DataSize = 3000;
             //Mock data filler
             var MockDataFiller = new Mock<IDataFiller>();
             MockDataFiller.Setup(foo => foo.FillAll()).Returns(PrepareDataContext(DataSize));
@@ -98,7 +97,7 @@ namespace Lib.Tests
             var MockBook = RandomBook();
             dataRepository.AddBook(MockBook.Object);
             var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            DataContext dataContext = (DataContext) data.GetValue(dataRepository);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
             Assert.AreEqual(1, dataContext.Books.Count());
 
         }
@@ -111,7 +110,7 @@ namespace Lib.Tests
 
             dataRepository.AddBook(MockBook.Object);
 
-            Book book = dataRepository.GetBook(0);     
+            Book book = dataRepository.GetBook(0);
             Assert.AreEqual(book, MockBook.Object);
         }
 
@@ -319,7 +318,7 @@ namespace Lib.Tests
             Assert.AreEqual(borrow, MockBorrow1.Object);
 
             //test if book can be changed
-       
+
             dataRepository.UpdateBorrow(0, MockBorrow2.Object);
 
             Assert.AreEqual(MockBorrow2.Object, dataRepository.GetBorrow(0));
@@ -433,5 +432,92 @@ namespace Lib.Tests
             Assert.AreEqual(0, dataRepository.GetAllBookDescriptions().Count());
 
         }
+
+        [TestMethod()]
+        public void AddBookNumberTest()
+        {
+            var Book1 = RandomBookDescription();
+            int Number1 = rng.Next();
+            var Book2 = RandomBookDescription();
+            int Number2 = rng.Next();
+            DataRepository dataRepository = new DataRepository();
+
+            dataRepository.AddBookNumber(Book1.Object, Number1);
+            dataRepository.AddBookNumber(Book2.Object, Number2);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+
+            Assert.AreEqual(2, dataContext.NumberOfBooks.Count());
+            Assert.IsTrue(dataContext.NumberOfBooks.ContainsKey(Book1.Object));
+            Assert.IsTrue(dataContext.NumberOfBooks.ContainsKey(Book2.Object));
+            Assert.IsTrue(dataContext.NumberOfBooks.ContainsValue(Number1));
+            Assert.IsTrue(dataContext.NumberOfBooks.ContainsValue(Number2));
+
+
+        }
+
+        [TestMethod()]
+        public void ChangeBookNumberTest()
+        {
+            var Book1 = RandomBookDescription();
+            int Old = rng.Next()%1000000;
+            int Change = rng.Next()%10000;
+            DataRepository dataRepository = new DataRepository();
+
+            //assume add is working
+            dataRepository.AddBookNumber(Book1.Object, Old);
+
+
+            dataRepository.ChangeBookNumber(Book1.Object, Change);
+
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+            Assert.AreEqual(Old + Change, dataContext.NumberOfBooks[Book1.Object]);
+        }
+
+        [TestMethod()]
+        public void GetBookNumberTest()
+        {
+            var Book1 = RandomBookDescription();
+            int Old = rng.Next();
+            DataRepository dataRepository = new DataRepository();
+            //assume add is working
+            dataRepository.AddBookNumber(Book1.Object, Old);
+
+            //Test reflected object
+            var data = typeof(DataRepository).GetField("Data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            DataContext dataContext = (DataContext)data.GetValue(dataRepository);
+
+
+            Assert.AreEqual(Old, dataContext.NumberOfBooks[Book1.Object]);
+
+           
+        }
+
+        [TestMethod()]
+        public void GetAllNumberOfBooksTest()
+        {
+            const int NUMBER_OF_BOOK_NUMBERS = 1000;
+            DataRepository dataRepository = new DataRepository();
+            Dictionary<BookDescription, int> Expected = new Dictionary<BookDescription, int>();
+
+            for(int i = 0; i < NUMBER_OF_BOOK_NUMBERS; i++)
+            {
+                var MockBookDescripion = RandomBookDescription();
+                int Number = rng.Next();
+                dataRepository.AddBookNumber(MockBookDescripion.Object, Number);
+                Expected.Add(MockBookDescripion.Object, Number);
+            }
+
+            Assert.AreSame(dataRepository.GetAllNumberOfBooks().Keys.ToString(),Expected.Keys.ToString());
+            Assert.AreSame(dataRepository.GetAllNumberOfBooks().Values.ToString(),Expected.Values.ToString());
+            Assert.AreSame(Expected.ToString(), dataRepository.GetAllNumberOfBooks().ToString());
+        }
+
+
     }
 }
