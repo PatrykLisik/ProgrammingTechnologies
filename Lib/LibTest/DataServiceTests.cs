@@ -76,6 +76,7 @@ namespace Lib.Tests
             return Ans;
         }
 
+      
         [TestMethod()]
         public void GetAllBooksTestEmptyRepo()
         {
@@ -86,12 +87,13 @@ namespace Lib.Tests
             Assert.AreEqual(0, GivenBooklist.Count());
 
         }
+        /*
         [TestMethod()]
         public void GetAllBooksTest()
         {
             throw new NotImplementedException();
         }
-
+        */
         [TestMethod()]
         public void BorrowsOfReaderTestEmptyRepo()
         {
@@ -101,7 +103,8 @@ namespace Lib.Tests
 
             Assert.AreEqual(0, BR.Count());
         }
-
+        //Not implenened tests commented into oblivion 
+        /*
         [TestMethod()]
         public void BorrowsOfReaderTest()
         {
@@ -148,6 +151,6 @@ namespace Lib.Tests
         public void DataServiceTest()
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }
