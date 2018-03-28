@@ -29,22 +29,23 @@ namespace Lib
 
         private void BorrowsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("Change type: " + e.Action);
+            Console.WriteLine("Change type: " + e.Action);
             if (e.NewItems != null)
             {
-                Debug.WriteLine("Items added: ");
+                Console.WriteLine("Items added: ");
                 foreach (var item in e.NewItems)
                 {
-                    Debug.WriteLine(item);
+
+                    Console.WriteLine(item);
                 }
             }
-
+            
             if (e.OldItems != null)
             {
-                Debug.WriteLine("Items removed: ");
+                Console.WriteLine("Items removed: ");
                 foreach (var item in e.OldItems)
                 {
-                    Debug.WriteLine(item);
+                    Console.WriteLine(item);
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace Lib
 
         public override string ToString()
         {
-            return String.Format("Book: {0} by {1}", Title, Author);
+           return String.Format("Book: {0} by {1}", Title, Author);
         }
     }
 }

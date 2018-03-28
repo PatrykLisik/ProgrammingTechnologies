@@ -10,9 +10,6 @@ using System.Collections.ObjectModel;
 
 namespace Lib.Tests
 {
-    //how to test console out
-    //https://www.codeproject.com/Articles/501610/Getting-Console-Output-Within-A-Unit-Test
-
     [TestClass()]
     public class DataServiceTests
     {

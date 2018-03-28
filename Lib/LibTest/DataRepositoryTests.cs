@@ -28,7 +28,9 @@ namespace Lib.Tests
         }
         Mock<Borrow> RandomBorrow()
         {
-            return new Mock<Borrow>(RandomReader().Object, RandomBookDescription().Object);
+           var MockBorrow = new Mock<Borrow>(RandomReader().Object, RandomBookDescription().Object);
+           MockBorrow.Setup(borrow => borrow.ToString()).Returns("MOCK BORROW");
+           return MockBorrow;
         }
         Mock<BookDescription> RandomBookDescription()
         {
@@ -518,6 +520,39 @@ namespace Lib.Tests
             Assert.AreSame(Expected.ToString(), dataRepository.GetAllNumberOfBooks().ToString());
         }
 
+        [TestMethod]
+        public void BorrowConsoleNotificationAdd()
+        {
+            DataRepository dataRepository = new DataRepository();
+            var MockBorrow = RandomBorrow();
+            String expectedOut = "Change type: Add\r\nItems added: \r\nMOCK BORROW\r\n"; ;
+            using (var consoleLogger = new ConsoleMiddleman())
+            {
+                dataRepository.AddBorrow(MockBorrow.Object);
+                Assert.IsFalse(String.IsNullOrEmpty(consoleLogger.GetOuput()));
+                Assert.IsTrue(String.Equals(expectedOut, consoleLogger.GetOuput()));
+
+            }
+            Console.Write(expectedOut);
+        }
+
+        [TestMethod]
+        public void BorrowConsoleNotificationDelete()
+        {
+            DataRepository dataRepository = new DataRepository();
+            var MockBorrow = RandomBorrow();
+            String expectedOut = "Change type: Remove\r\nItems removed: \r\nMOCK BORROW\r\n";
+            dataRepository.AddBorrow(MockBorrow.Object);
+
+            using (var consoleLogger = new ConsoleMiddleman())
+            {
+                dataRepository.DeleteBorrow(0);
+                Assert.IsFalse(String.IsNullOrEmpty(consoleLogger.GetOuput()));
+                Assert.IsTrue(String.Equals(expectedOut, consoleLogger.GetOuput()));
+
+            }
+            Console.Write(expectedOut);
+        }
 
     }
 }
