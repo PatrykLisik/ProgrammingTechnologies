@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 namespace Lib
 {
+    [Serializable]
     public class DataContext
     {
         public List<Book> Books { get; set; }

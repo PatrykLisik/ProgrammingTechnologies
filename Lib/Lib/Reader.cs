@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Lib
 {
     //wykaz 
+    [Serializable]
     public class Reader:IComparable<Reader>
     {
        public string Name { get;  }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Lib
 {
     //katalog
+    [Serializable]
     public class Book
     {
        public string Title { get; }

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Permissions;
 
 namespace Lib
 {
     //zdarzenie 
+    [Serializable]
     public class Borrow
     {
         public Reader Who { get; }
         public BookDescription What { get; }
-        public DateTime Date { get; }
+        public DateTime Date { get; set; }
 
 
         public Borrow(Reader who, BookDescription what)
@@ -20,6 +22,11 @@ namespace Lib
             What = what ?? throw new ArgumentNullException(nameof(what));
             Date = new DateTime();
             Date = DateTime.Today;
+        }
+
+        public void ChangeDate(DateTime newDate)
+        {
+            Date = newDate;
         }
 
         public override string ToString()

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Lib
 {
     //opis stanu 
+    [Serializable]
     public class BookDescription
     {
         public string Type { get; }
