@@ -29,7 +29,7 @@ namespace Linq_ext
             public void Order()
             {
                 List<int> numbers = new List<int>{1, 2, 0};
-                List<int> sorted = numbers.OrderBy(x => x.ToString()).ToList();
+                List<int> sorted = numbers.OrderBy(x => x).ToList();
                 for(int i=0; i<3; i++)
                 {
                     Assert.AreEqual(i, sorted[i]);
