@@ -7,23 +7,20 @@
 
     namespace Ext_meth
     {
+        public static class BadClass
+        {
+            static public String DoNoting<T>(this IEnumerable<T> TSource, String intput)
+            {
+                return intput;
+            }
+        }
+
         [TestClass]
         public class UnitTest1
         {
+            //Test data
+            List<int> numbers = Enumerable.Range(0, 20).ToList();
 
-
-            [TestMethod]
-            public void Even()
-            {
-                //Test data
-                List<int> numbers = Enumerable.Range(0, 20).ToList();
-                List<int> even = numbers.Where(x => x % 2 == 0).ToList();
-                foreach (int i in even)
-                {
-                    Console.WriteLine(i);
-                    Assert.AreEqual(i % 2, 0);
-                }
-            }
 
             [TestMethod]
             public void Order()
@@ -37,11 +34,10 @@
             }
 
             [TestMethod]
-            public void Even2()
+            public void Even()
             {
-                //Test data
-                List<int> numbers = Enumerable.Range(0, 20).ToList();
-                Func<int,bool> foo = x => x % 2 == 0;
+
+                Func<int, bool> foo = x => x % 2 == 0;
                 Predicate<int> pred = x => x % 2 == 0;
 
                 List<int> even1 = numbers.Where(x => x % 2 == 0).ToList();
@@ -53,6 +49,15 @@
                 Assert.IsTrue(even1.All(even2.Contains));
                 foreach (int i in even2)
                     Console.WriteLine(i);
+            }
+
+            [TestMethod]
+            public void CustomExtMethod()
+            {
+                String input = "ddddd";
+                String output = numbers.DoNoting(input);
+                Assert.AreSame(input, output);
+
             }
         }
     }
