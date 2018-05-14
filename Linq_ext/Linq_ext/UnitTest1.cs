@@ -19,7 +19,10 @@ namespace Linq_ext
                 List<int> numbers = Enumerable.Range(0, 20).ToList();
                 List<int> even = numbers.Where(x => x % 2 == 0).ToList();
                 foreach (int i in even)
+                {
                     Console.WriteLine(i);
+                    Assert.AreEqual(i%2, 0);
+                }
             }
         }
     }
