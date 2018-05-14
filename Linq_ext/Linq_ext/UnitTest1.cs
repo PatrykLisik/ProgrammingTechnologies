@@ -21,6 +21,13 @@ namespace Linq_ext
                 foreach (int i in even)
                     Console.WriteLine(i);
             }
+
+            [TestMethod]
+            public void XML()
+            {
+            }
+
+
         }
     }
 }
