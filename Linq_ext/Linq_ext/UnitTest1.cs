@@ -12,17 +12,6 @@
         [TestClass]
         public class UnitTest1
         {
-            [TestMethod]
-            public void Even()
-            {
-                List<int> numbers = Enumerable.Range(0, 20).ToList();
-                List<int> even = numbers.Where(x => x % 2 == 0).ToList();
-                foreach (int i in even)
-                {
-                    Console.WriteLine(i);
-                    Assert.AreEqual(i % 2, 0);
-                }
-            }
 
             [TestMethod]
             public void Order()
@@ -36,7 +25,7 @@
             }
 
             [TestMethod]
-            public void Even2()
+            public void Even()
             {
                 //Test data
                 List<int> numbers = Enumerable.Range(0, 20).ToList();
