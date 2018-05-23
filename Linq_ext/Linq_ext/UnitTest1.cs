@@ -21,13 +21,12 @@
             //Test data
             List<int> numbers = Enumerable.Range(0, 20).ToList();
 
-
             [TestMethod]
             public void Order()
             {
                 List<int> numbers = new List<int> { 1, 2, 0 };
                 List<int> sorted = numbers.OrderBy(x => x.ToString()).ToList();
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < numbers.Count(); i++)
                 {
                     Assert.AreEqual(i, sorted[i]);
                 }
@@ -36,7 +35,6 @@
             [TestMethod]
             public void Even()
             {
-
                 Func<int, bool> foo = x => x % 2 == 0;
                 Predicate<int> pred = x => x % 2 == 0;
 
@@ -57,7 +55,6 @@
                 String input = "ddddd";
                 String output = numbers.DoNoting(input);
                 Assert.AreSame(input, output);
-
             }
         }
     }
