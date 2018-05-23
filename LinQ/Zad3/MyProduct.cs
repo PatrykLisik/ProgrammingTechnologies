@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zad3
 {
-    class MyProduct
+    public class MyProduct
     {
         public MyProduct(Product P)
         {
@@ -66,5 +66,4 @@ namespace Zad3
         public System.DateTime ModifiedDate { get; set; }
         private Product aggregateProduct;
     }
-}
 }

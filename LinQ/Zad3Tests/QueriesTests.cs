@@ -11,7 +11,7 @@ namespace Zad3.Tests
     [TestClass()]
     public class QueriesTests
     {
-        private bool TestForExistance<FuncIn, FuncOut>(List<FuncIn> argsFroFunc, Func<FuncIn, List<FuncOut>> func)
+        public static bool TestForExistance<FuncIn, FuncOut>(List<FuncIn> argsFroFunc, Func<FuncIn, List<FuncOut>> func)
         {
 
             bool ret = false;
