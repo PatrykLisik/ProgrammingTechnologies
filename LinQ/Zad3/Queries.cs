@@ -9,13 +9,16 @@ namespace Zad3
     public static class Queries
     {
         static ADWDataContext dataContext = new ADWDataContext("localhost");
+
+        public static ADWDataContext DataContext { get => dataContext; set => dataContext = value; }
+
         public static List<Product> GetProductsByName(string namePart)
         {
-            var products = from product in dataContext.Products
+            return (from product in dataContext.Products
                            where product.Name.Contains(namePart)
-                           select product;
+                           select product).ToList<Product>();
 
-            return new List<Product>(products);
+           
         }
 
         public static List<Product> GetProductsByVendorName(string vendorName)
@@ -84,10 +87,17 @@ namespace Zad3
             }
         }
 
+        //wrapper for tets
+        public static List<Product> GetNProductsFromCategory(Tuple<string,int> args)
+        {
+            return GetNProductsFromCategory(args.Item1, args.Item2);
+        }
+
         public static int GetTotalStandardCostByCategory(ProductCategory category)
         {
             return (int)(from p in dataContext.Products
-                         where p.ProductSubcategory != null && p.ProductSubcategory.ProductCategory.ProductCategoryID == category.ProductCategoryID
+                         where p.ProductSubcategory != null && 
+                                    p.ProductSubcategory.ProductCategory.ProductCategoryID == category.ProductCategoryID
                          select p).Sum(o => o.StandardCost);
         }
     }
