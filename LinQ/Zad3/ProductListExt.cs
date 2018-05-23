@@ -26,7 +26,7 @@ namespace Zad3
             var results = from p in list
                           join pv in dataContext.ProductVendors on p.ProductID equals pv.ProductID
                           join v in dataContext.Vendors on pv.BusinessEntityID equals v.BusinessEntityID
-                          select new { Prod = p, Vend = v };
+                          select new { Prod = p, Vend = v }; // TUPLE EXIST
 
             string result = "";
             foreach (var pair in results)
