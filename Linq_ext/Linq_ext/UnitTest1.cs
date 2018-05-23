@@ -43,8 +43,8 @@
                 List<int> even1 = numbers.Where(x => x % 2 == 0).ToList();
                 List<int> even2 = numbers.Where(foo).ToList();
 
-                // bad cant compile
-                //List<int> even2 = numbers.Where(pred).ToList();
+                // bad cant compile 
+                //List<int> even3 = numbers.Where(pred).ToList();
 
                 Assert.IsTrue(even1.All(even2.Contains));
                 foreach (int i in even2)
