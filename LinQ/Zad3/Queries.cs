@@ -55,6 +55,7 @@ namespace Zad3
             catch
             {
                 return "";
+                //custom Exception?
             }
         }
 

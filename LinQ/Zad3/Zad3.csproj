@@ -61,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ADW.dbml</DependentUpon>
     </Compile>
+    <Compile Include="ProductListExt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries.cs" />
